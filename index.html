@@ -3,7 +3,7 @@
 </style></head><body><header><h1>🛒 Familien-Einkaufsliste</h1><small>Weiterentwicklung · Version 0.8 (Online-Rechteverwaltung)</small></header><section id="onlineAccount" class="panel" style="border:2px solid #b8d5c4;margin:12px auto;max-width:850px"><h2>🔐 Online-Konto verbinden</h2><p id="onlineStatus" class="muted" role="status">Verbindung wird vorbereitet …</p><div id="onlineLogin"><label for="onlineEmail">E-Mail-Adresse</label><input id="onlineEmail" type="email" autocomplete="email" placeholder="name@beispiel.de"><button type="button" id="onlineSend" style="margin-top:10px">Anmeldelink per E-Mail senden</button></div><div id="onlineLogged" class="hidden"><p id="onlineIdentity"></p><label for="onlineFamily">Familie</label><select id="onlineFamily"></select><button type="button" id="onlineLogout" class="secondary">Abmelden</button></div><p class="muted"><strong>Wichtig:</strong> Die Anmeldung wird hier mit Supabase verbunden. Die neue Online-Einkaufsliste ist mit Supabase verbunden. Die bisherigen lokalen Testdaten werden nicht automatisch übertragen. Bitte noch keine Familienmitglieder einladen.</p></section><section class="panel hidden" id="onlineRecipes"><h2>☁️ Gemeinsame Rezepte und Wunschgerichte</h2><p class="muted" id="onlineRecipeStatus">Bitte anmelden.</p><h3>Rezept anlegen</h3><p class="muted">Foto oder PDF einlesen und erkannte Daten vor dem Online-Speichern prüfen.</p><input id="onlineRecipeImport" type="file" accept="image/*,application/pdf,.pdf"><p id="onlineImportStatus" role="status" class="muted"></p><form id="onlineRecipeForm"><label>Gericht</label><input name="name" required maxlength="200"><label>Portionen im Original</label><input name="servings" type="number" min="1" max="100" value="4" required><label>Zutaten (eine pro Zeile: Menge | Einheit | Zutat)</label><textarea name="ingredients" required placeholder="500 | g | Hackfleisch\n1 | Stück | Zwiebel"></textarea><label>Zubereitung</label><textarea name="instructions"></textarea><button type="submit">Rezept online speichern</button></form><h3>Rezeptsammlung</h3><div id="onlineRecipeList"></div><h3>Wunschgerichte / Wird gekocht</h3><div id="onlineWishList"></div><h3>Wochenplan</h3><div id="onlineWeekList"></div><button type="button" class="secondary" id="onlineRecipesRefresh">↻ Rezepte aktualisieren</button></section><section id="onlineInvites" class="panel hidden" style="max-width:850px;margin:12px auto"><h2>👨‍👧‍👧 Online-Familie</h2><p id="onlineInviteStatus" class="muted" role="status">Bitte anmelden.</p><div id="onlineMembers"></div><div id="onlineRights" class="hidden"><h3>Mitgliederrechte verwalten</h3><p class="muted">Nur Administratoren können Freigabe- und Löschrechte vergeben. Änderungen gelten für die ausgewählte Familie.</p><div id="onlineRightsList"></div><p id="onlineRightsStatus" role="status" class="muted"></p></div><div id="onlineInviteAdmin" class="hidden"><h3>Familienmitglied einladen</h3><label>E-Mail-Adresse</label><input type="email" id="inviteEmail" placeholder="name@beispiel.de"><button type="button" id="createInvite">Einladung erstellen</button><p class="muted">Den Einladungslink anschließend persönlich an die eingeladene Person weitergeben.</p><textarea id="inviteLink" readonly rows="3" placeholder="Hier erscheint der Einladungslink"></textarea><button type="button" id="copyInvite">Link kopieren</button></div><div id="onlineInviteAccept"><h3>Einladung annehmen</h3><label>Einladungscode oder Link</label><input id="inviteToken" placeholder="Code aus dem Einladungslink"><label>Dein Anzeigename</label><input id="inviteName" maxlength="100"><button type="button" id="acceptInvite">Einladung annehmen</button></div></section><section id="onlineShopping" class="panel hidden" style="border:2px solid #b8d5c4;margin:12px auto;max-width:850px"><h2>☁️ Gemeinsame Online-Einkaufsliste</h2><p id="onlineShopStatus" class="muted" role="status">Bitte anmelden und Familie auswählen.</p><form id="onlineItemForm"><label>Artikel</label><input name="name" required maxlength="200" placeholder="z. B. Milch"><div class="row"><div><label>Menge</label><input name="amount" type="number" min="0.001" step="any" value="1" required></div><div><label>Einheit</label><select name="unit"><option>Stück</option><option>g</option><option>kg</option><option>ml</option><option>l</option><option>Packung</option><option>Dose</option><option>Bund</option></select></div></div><label>Warengruppe</label><select name="category" id="onlineItemCategory"></select><button type="submit" style="margin-top:10px">＋ Online hinzufügen</button></form><div id="onlineItems"></div><button type="button" id="onlineFinish" class="full" style="margin-top:14px">✓ Online-Einkauf abschließen</button><button type="button" id="onlineReload" class="secondary" style="margin-top:10px">↻ Aktualisieren</button><p class="subtle">Die Online-Liste wird regelmäßig aktualisiert. Lokale Testdaten werden nicht automatisch hochgeladen.</p></section><main><div class="notice"><strong>Testbereich:</strong> Die unten stehenden Rezepte, Wünsche, Wochenplan und die alte Einkaufsliste sind weiterhin lokal. Die gemeinsame Online-Einkaufsliste befindet sich oberhalb der Startseite. Einladungen und serverseitige Rezeptfunktionen sind noch nicht angeschlossen. Bitte noch keine Familienmitglieder einladen.</div>
 <section id="home" class="panel"><h2>🏠 Startseite</h2><p>Was möchtest du heute machen?</p><div class="tilegrid"><button class="tile" data-go="shopping"><span>🛒</span>Einkaufsliste</button><button class="tile" data-go="recipes"><span>🍽️</span>Rezepte</button><button class="tile" data-go="wishes"><span>❤️</span>Wunschgerichte</button><button class="tile" data-go="plan"><span>📅</span>Wochenplan</button><button class="tile" data-go="family"><span>👨‍👧‍👧</span>Familie</button><button class="tile" data-go="settings"><span>⚙️</span>Einstellungen</button></div></section>
 <section id="shopping" class="panel hidden"><h2>🛒 Gemeinsame Einkaufsliste</h2><form id="itemForm"><label>Artikel</label><input name="name" required placeholder="z. B. Milch"><div class="row"><div><label>Menge</label><input name="amount" type="number" min="0.001" step="any" value="1" required></div><div><label>Einheit</label><select name="unit"><option>Stück</option><option>g</option><option>kg</option><option>ml</option><option>l</option><option>Packung</option></select></div></div><label>Warengruppe</label><select name="category" id="itemCategory"></select><button style="margin-top:12px" type="submit">＋ Artikel hinzufügen</button></form><h3>Offene Einkaufsliste</h3><div id="shoppingList"></div><button class="full" id="finishShopping" style="margin-top:16px">✓ Einkauf abschließen</button><p class="muted">Abgehakte Artikel bleiben bis zum Abschluss sichtbar. Nicht gekaufte Artikel bleiben auf der Liste.</p></section>
-<section id="recipes" class="panel hidden"><h2>🍽️ Rezeptsammlung</h2><p class="muted">Rezepte bleiben dauerhaft gespeichert, auch nachdem ein Gericht gekocht wurde.</p><button id="newRecipe">＋ Rezept anlegen</button><div class="status"><strong>📷 Rezept aus Foto oder PDF übernehmen</strong><p class="subtle">Text wird auf diesem Gerät erkannt und zum Prüfen in das Rezeptformular übertragen. Für die Erkennung ist eine Internetverbindung erforderlich. Handschrift und gescannte PDFs können Fehler enthalten.</p><input id="recipeImport" type="file" accept="image/*,application/pdf,.pdf"><p id="importStatus" class="muted" role="status"></p></div><div id="recipeList"></div></section>
+<section id="recipes" class="panel hidden"><h2>🍽️ Rezeptsammlung</h2><p class="muted">Rezepte bleiben dauerhaft gespeichert, auch nachdem ein Gericht gekocht wurde.</p><button id="newRecipe">＋ Rezept anlegen</button><div class="status"><strong>📷 Rezept aus Foto oder PDF übernehmen</strong><p class="subtle">Text wird auf diesem Gerät erkannt und zum Prüfen in das Rezeptformular übertragen. Für die Erkennung ist eine Internetverbindung erforderlich. Handschrift und gescannte PDFs können Fehler enthalten.</p><input id="recipeImport" type="file" accept="image/*,application/pdf,.pdf"><details style="margin:12px 0"><summary>Erkannten PDF-Text ansehen und korrigieren</summary><label for="importRaw">Erkannter Rezepttext</label><textarea id="importRaw" style="min-height:160px;width:100%" placeholder="Erkannten Text vor der Übernahme korrigieren"></textarea><button type="button" id="importReapply">Korrigierten Text in Rezeptfelder übernehmen</button></details><p id="importStatus" class="muted" role="status"></p></div><div id="recipeList"></div></section>
 <section id="wishes" class="panel hidden"><h2>❤️ Wunschgerichte</h2><p class="muted">Beim Freigeben werden Zutaten einmalig übernommen. Der Wochenplan fügt keine weiteren Zutaten hinzu.</p><div id="wishList"></div></section>
 <section id="plan" class="panel hidden"><h2>📅 Wochenplan</h2><p class="muted">Einplanung ist optional und verändert die Einkaufsliste nicht.</p><div id="planList"></div></section>
 <section id="family" class="panel hidden"><h2>👨‍👧‍👧 Familie</h2><div class="status warn">Online-Einladungen sind noch nicht aktiviert. Die hier eingestellten Namen dienen nur dem lokalen Test.</div><label>Aktive Testperson</label><select id="activePerson"></select><h3>Familienmitglieder</h3><div id="memberList"></div><p class="muted">Kai verwaltet die Rechte. Später können weitere Personen mit eigener E-Mail eingeladen werden.</p></section>
@@ -26,38 +26,89 @@ $('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(db,null,2)],{type
 
 // Foto/PDF-Rezeptimport: Texterkennung ausschließlich im Browser; erkannte Angaben müssen geprüft werden.
 function loadScript(url){return new Promise((resolve,reject)=>{const x=document.createElement('script');x.src=url;x.onload=resolve;x.onerror=()=>reject(Error('Erkennungsbibliothek konnte nicht geladen werden. Internetverbindung prüfen.'));document.head.append(x)})}
-function parseRecipeText(raw){
- const lines=raw.replace(/\r/g,'').split('\n').map(x=>x.replace(/\s+/g,' ').trim()).filter(Boolean);
- let title='',servings=4,ingredients=[],instructions=[],section='';
- const units={'gramm':'g','gr':'g','g':'g','kilogramm':'kg','kg':'kg','milliliter':'ml','ml':'ml','liter':'l','l':'l','stück':'Stück','stk':'Stück','st':'Stück','packung':'Packung','pkg':'Packung','dose':'Dose','bund':'Bund','el':'EL','tl':'TL','prise':'Prise'};
+function normalizeUnit(u){const a={'gramm':'g','gr':'g','kilogramm':'kg','liter':'l','milliliter':'ml','millilitre':'ml','stk':'Stück','stk.':'Stück','stück':'Stück','el':'EL','tl':'TL','prise':'Prise','prisen':'Prise','dosen':'Dose','dose':'Dose','packungen':'Packung','packung':'Packung','bund':'Bund'};return a[u.toLowerCase()]||u}
+function parseRecipeLegacy(raw){
+ const lines=raw.replace(/\r/g,'').split('\n').map(x=>x.replace(/^[•*\-–]\s*/,'').trim()).filter(Boolean);
+ const ingredientRE=/^(\d+(?:[.,]\d+)?|\d+\s*\/\s*\d+|[½¼¾])\s*(kg|g|gr|gramm|kilogramm|ml|milliliter|l|liter|stück|stk\.?|packung|packungen|dose|dosen|bund|el|tl|prise|prisen)?\s+(.+)$/i;
+ const section=/^(zutaten|zubereitung|anleitung|zubereitung:|zutaten:|so geht.s|so wird.s gemacht|schritte)\s*:?$/i;
+ const portions=raw.match(/(?:für\s+)?(\d{1,2})\s*(?:person(?:en|\(en\))?|portionen|port\.)/i)||raw.match(/(?:portionen|personen)\s*:?\s*(\d{1,2})/i);
+ let title='',phase='intro',ingredients=[],steps=[];
  for(const line of lines){
-  const low=line.toLocaleLowerCase('de');
-  const portion=line.match(/(?:für\s*)?(\d{1,2})\s*(?:portionen|personen|pers\.?)/i)||line.match(/(?:portionen|personen)\s*:?\s*(\d{1,2})/i);
-  if(portion){servings=Number(portion[1]);if(!title)continue}
-  if(/^(zutaten|ingredients)\s*:?$/i.test(line)){section='ingredients';continue}
-  if(/^(zubereitung|anleitung|zubereitungsschritte|so geht.s|zubereiten)\s*:?$/i.test(line)){section='instructions';continue}
-  const match=line.match(/^[•*\-]?\s*(\d+(?:[.,]\d+)?|½|¼|¾|\d+\s*\/\s*\d+)\s*(kg|g|gramm|gr|ml|milliliter|l|liter|stück|stk|st|packung|pkg|dose|bund|el|tl|prise)\.?\s+(.+)$/i);
-  if(match && section!=='instructions'){
-   let num=match[1];let amount=num==='½'?.5:num==='¼'?.25:num==='¾'?.75:num.includes('/')?Number(num.split('/')[0])/Number(num.split('/')[1]):Number(num.replace(',','.'));
-   if(amount>0){ingredients.push(`${amount} | ${units[match[2].toLocaleLowerCase('de')]||match[2]} | ${match[3].replace(/^[\s:-]+/,'')}`);section='ingredients';continue}
+  if(/^(Nährwerte|Empfehlenswert bei|Dieses Thema im Programm)\b/i.test(line)){phase='other';continue}
+  if(phase==='other')continue;
+  if(/^zutaten\b/i.test(line)&&line.length<28){phase='ingredients';continue}
+  if(/^(zubereitung|anleitung|zubereiten|so geht|schritte)\b/i.test(line)&&line.length<45){phase='steps';continue}
+  if(section.test(line))continue;
+  if(/^(?:\d+\s*min\b|leicht$|(?:für\s+)?\d{1,2}\s*(?:person(?:en|\(en\))?|portionen)\b)/i.test(line))continue;
+  const m=line.match(ingredientRE);
+  if(m&&phase!=='steps'&&!/^(?:person|portion|minute|min\b)/i.test(m[3])){
+   let q=m[1];if(q.includes('/')){const [a,b]=q.split('/').map(Number);q=String(a/b)}
+   q=q.replace('½','0,5').replace('¼','0,25').replace('¾','0,75');
+   let unit=normalizeUnit(m[2]||'Stück');let name=m[3].replace(/\s*\([^)]*\)\s*$/,'').trim();
+   // Existing online database only supports these units; do not silently convert spoons or pinches to pieces.
+   if(!['kg','g','ml','l','Stück','Packung','Dose','Bund'].includes(unit)){ingredients.push(line);continue}
+   ingredients.push(q+' '+unit+' '+name);continue;
   }
-  if(!title&&!/^rezept\s*:?$/i.test(line)&&!portion){title=line.replace(/^rezept\s*:\s*/i,'');continue}
-  if(section==='instructions'||(ingredients.length&&section!=='ingredients'))instructions.push(line);
-  else if(section==='ingredients'&&ingredients.length&&/^(?:\d+[.)]|schritt|zuerst|danach|anschließend|alles|die |den |das )/i.test(line)){section='instructions';instructions.push(line)}
+  if(phase==='steps')steps.push(line);
+  else if(phase==='ingredients' && !/^\d/.test(line)){
+   if(line.length<60)ingredients.push(line.replace(/^nach Belieben:\s*/i,'nach Belieben: '));else if(line.length>60){phase='steps';steps.push(line)}
+  }else if(!title&&line.length<90&&!/^rezept\s*[:]?$/i.test(line))title=line;
+  else if(phase==='intro'&&line.length>70){phase='steps';steps.push(line)}
  }
- return {title,servings,ingredients,instructions:instructions.join('\n'),raw};
+ return {title,servings:portions?Number(portions[1]):null,ingredients,steps};
 }
+
+function parseRecipeText(raw){
+ const p=parseRecipeLegacy(raw);
+ const ingredients=p.ingredients.map(line=>{
+   const m=line.match(/^(\d+(?:[.,]\d+)?)\s+(kg|g|ml|l|Stück|Packung|Dose|Bund)\s+(.+)$/i);
+   return m ? Number(m[1].replace(',','.'))+' | '+m[2]+' | '+m[3] : line;
+ });
+ return {title:p.title||'',servings:p.servings||4,ingredients,instructions:p.steps.join('\n'),raw};
+}
+function setImportStatus(message){$('importStatus').textContent=message;}
+
 async function pdfText(file){
- if(!window.pdfjsLib)await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');
- pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
- const doc=await pdfjsLib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;
- let text='';for(let i=1;i<=Math.min(doc.numPages,12);i++){
-  const page=await doc.getPage(i),content=await page.getTextContent();
-  let y=null;for(const item of content.items){const nextY=item.transform?.[5];if(y!==null&&nextY!==undefined&&Math.abs(nextY-y)>3)text+='\n';text+=item.str+' ';y=nextY}
-  text+='\n';
+ await loadScript('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',()=>!!window.pdfjsLib);
+ const pdfjs=window.pdfjsLib;pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+ const pdf=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;
+ if(pdf.numPages>12)throw Error('Bitte eine PDF mit höchstens 12 Seiten auswählen.');
+ let result=[];
+ for(let i=1;i<=pdf.numPages;i++){
+  setImportStatus('PDF-Seite '+i+' von '+pdf.numPages+' wird gelesen …');
+  const page=await pdf.getPage(i), content=await page.getTextContent();
+  const pieces=content.items.filter(t=>t.str&&t.str.trim()).map(t=>({x:t.transform[4],y:t.transform[5],text:t.str.trim()}));
+  // In two-column recipes, ingredient names and instructions can share a line.
+  // Separate columns using PDF coordinates before assembling lines.
+  const groupRows=items=>{
+   const rows=[];
+   for(const t of items){let r=rows.find(r=>Math.abs(r.y-t.y)<3);if(!r){r={y:t.y,items:[]};rows.push(r)}r.items.push(t)}
+   return rows.sort((a,b)=>b.y-a.y).map(r=>r.items.sort((a,b)=>a.x-b.x).map(t=>t.text).join(' ').trim()).filter(Boolean);
+  };
+  const all=groupRows(pieces), ingredientHeader=pieces.find(t=>/^Zutaten\s*:/i.test(t.text));
+  const endHeader=pieces.filter(t=>/^(Nährwerte|Empfehlenswert bei|Nutrition)\b/i.test(t.text)).sort((a,b)=>b.y-a.y)[0];
+  const splitX=page.view[2]*0.44;
+  const left=pieces.filter(t=>t.x<splitX && ingredientHeader && t.y<ingredientHeader.y-5 && (!endHeader||t.y>endHeader.y+5));
+  const right=pieces.filter(t=>t.x>=splitX && ingredientHeader && t.y<ingredientHeader.y-5 && (!endHeader||t.y>endHeader.y+5));
+  if(left.length>=3 && right.length>=2){
+   const header=groupRows(pieces.filter(t=>t.y>ingredientHeader.y+5));
+   result.push(header.join('\n')+'\nZutaten:\n'+groupRows(left).join('\n')+'\nZubereitung:\n'+groupRows(right).join('\n'));
+   continue;
+  }
+  const text=all.join('\n');
+  if(text.trim().length>35){result.push(text);continue}
+  // Scanned pages require OCR; ask the user to review recognition carefully.
+  const viewport=page.getViewport({scale:1.8}),canvas=document.createElement('canvas');
+  canvas.width=viewport.width;canvas.height=viewport.height;
+  await page.render({canvasContext:canvas.getContext('2d'),viewport}).promise;
+  result.push(await recognize(canvas));
  }
- if(text.replace(/\s/g,'').length<35)throw Error('Dieses PDF enthält offenbar nur gescannte Bilder. Bitte eine Rezeptseite als Foto importieren.');
- return text;
+ return result.join('\n');
+}
+async function recognize(source){
+ await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js',()=>!!window.Tesseract);
+ const worker=await Tesseract.createWorker('deu+eng',1,{logger:m=>{if(m.status==='recognizing text')setImportStatus('Foto wird erkannt: '+Math.round((m.progress||0)*100)+' %')}});
+ try{const {data}=await worker.recognize(source);return data.text||''}finally{await worker.terminate()}
 }
 async function photoText(file){
  if(!window.Tesseract)await loadScript('https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js');
@@ -69,6 +120,7 @@ $('recipeImport').addEventListener('change',async e=>{
  try{
   if(file.size>12*1024*1024)throw Error('Datei ist größer als 12 MB.');
   const raw=file.type==='application/pdf'||/\.pdf$/i.test(file.name)?await pdfText(file):await photoText(file);
+  $('importRaw').value=raw;
   const parsed=parseRecipeText(raw);
   if(!parsed.ingredients.length)throw Error('Keine Zutaten automatisch erkannt. Bitte ein deutlicheres Foto verwenden oder Rezept manuell eingeben.');
   editRecipe(null);const f=$('recipeForm');f.elements.name.value=parsed.title||file.name.replace(/\.[^.]+$/,'');f.elements.servings.value=parsed.servings;f.elements.ingredients.value=parsed.ingredients.join('\n');f.elements.instructions.value=parsed.instructions;
@@ -77,6 +129,15 @@ $('recipeImport').addEventListener('change',async e=>{
  e.target.value='';
 });
 
+$('importReapply').addEventListener('click',()=>{
+ const raw=$('importRaw').value.trim();
+ if(!raw){setImportStatus('Kein Rezepttext vorhanden.');return}
+ const p=parseRecipeText(raw);editRecipe(null);const f=$('recipeForm');
+ f.elements.name.value=p.title;f.elements.servings.value=p.servings;
+ f.elements.ingredients.value=p.ingredients.join('\n');
+ f.elements.instructions.value=p.instructions;
+ setImportStatus(p.ingredients.length+' Zutaten erkannt. Bitte alle Felder prüfen.');
+});
 window.pdfText=pdfText;window.photoText=photoText;window.parseRecipeText=parseRecipeText;
 function render(){renderShopping();renderRecipes();renderWishes();renderPlan();renderFamily()}render();
 </script><script type="module">
